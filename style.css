@@ -126,7 +126,7 @@ body.dark-theme .navbar {
 .nav-badges {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
 }
 
 .status-badge {
@@ -140,6 +140,7 @@ body.dark-theme .navbar {
     align-items: center;
     gap: 6px;
     box-shadow: 0 4px 12px rgba(255, 117, 151, 0.25);
+    white-space: nowrap;
 }
 
 .pulse {
@@ -159,6 +160,7 @@ body.dark-theme .navbar {
     align-items: center;
     justify-content: center;
     transition: var(--transition-bounce);
+    flex-shrink: 0;
 }
 
 .theme-btn:hover {
@@ -338,7 +340,7 @@ body.dark-theme .quote-card {
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 700;
-    padding: 4px 12px;
+    padding: 6px 14px;
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: var(--transition-fast);
@@ -397,6 +399,7 @@ body.dark-theme .quote-card {
     gap: 8px;
     transition: var(--transition-bounce);
     width: 100%;
+    min-height: 44px;
 }
 
 .btn-pink-primary {
@@ -436,6 +439,7 @@ body.dark-theme .quote-card {
     padding: 8px 16px;
     font-size: 13px;
     width: auto;
+    min-height: 38px;
 }
 
 /* Stats Card */
@@ -578,7 +582,7 @@ body.dark-theme .quote-card {
     padding: 24px;
 }
 
-/* BIO CARD (NEW) */
+/* BIO CARD */
 .bio-lead {
     font-size: 16px;
     line-height: 1.6;
@@ -673,7 +677,7 @@ body.dark-theme .quote-card {
     flex-shrink: 0;
 }
 
-/* FUNNY QUOTES CARD (NEW) */
+/* FUNNY QUOTES CARD */
 .quotes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -871,6 +875,7 @@ body.dark-theme .bubble-content {
     border-radius: var(--radius-full);
     cursor: pointer;
     transition: var(--transition-fast);
+    min-height: 40px;
 }
 
 .chat-opt-btn:hover {
@@ -896,6 +901,7 @@ body.dark-theme .bubble-content {
     font-size: 14px;
     outline: none;
     transition: var(--transition-fast);
+    min-height: 46px;
 }
 
 .chat-input-form input:focus {
@@ -916,6 +922,7 @@ body.dark-theme .bubble-content {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .send-btn:hover {
@@ -1073,6 +1080,7 @@ body.dark-theme .checkmark {
     color: var(--text-primary);
     cursor: pointer;
     transition: var(--transition-bounce);
+    min-height: 44px;
 }
 
 .quiz-btn:hover {
@@ -1193,14 +1201,14 @@ body.dark-theme .checkmark {
 /* Floating Sound Controls */
 .floating-controls {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 24px;
+    right: 24px;
     z-index: 99;
 }
 
 .floating-btn {
-    width: 52px;
-    height: 52px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     background: linear-gradient(135deg, #ff7597, #ffa4ba);
     color: #fff;
@@ -1268,32 +1276,178 @@ body.dark-theme .checkmark {
     50% { box-shadow: 0 4px 20px rgba(255, 117, 151, 0.5); }
 }
 
-/* RESPONSIVE DESIGN */
+/* ==========================================================================
+   COMPREHENSIVE MOBILE RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+
+/* Tablets & Small Laptops (<= 992px) */
 @media (max-width: 992px) {
+    .navbar {
+        padding: 14px 24px;
+    }
+
+    .container {
+        padding: 20px 16px 40px 16px;
+    }
+
     .main-layout {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .profile-card {
         position: relative;
         top: 0;
     }
-    
-    .two-col-grid, .bio-grid, .quotes-grid {
+
+    .bio-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .quotes-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .two-col-grid {
         grid-template-columns: 1fr;
+        gap: 20px;
     }
 }
 
-@media (max-width: 600px) {
+/* Mobile Devices & Smartphones (<= 768px) */
+@media (max-width: 768px) {
     .navbar {
-        padding: 12px 20px;
+        padding: 12px 16px;
     }
-    
+
+    .brand-text {
+        font-size: 20px;
+    }
+
+    .status-badge {
+        font-size: 11.5px;
+        padding: 5px 12px;
+    }
+
+    .theme-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 16px;
+    }
+
+    .profile-card {
+        padding: 20px 16px;
+        border-radius: var(--radius-md);
+    }
+
+    .avatar-wrapper {
+        width: 140px;
+        height: 140px;
+    }
+
+    .cat-name {
+        font-size: 28px;
+    }
+
+    .card-header {
+        padding: 16px 18px;
+        gap: 12px;
+    }
+
+    .card-icon-wrapper {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        border-radius: 12px;
+    }
+
+    .card-title {
+        font-size: 19px;
+    }
+
+    .card-subtitle {
+        font-size: 12.5px;
+    }
+
+    .card-body {
+        padding: 18px;
+    }
+
+    .bio-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .routine-step {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .quotes-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .chat-bubble {
+        max-width: 92%;
+    }
+
+    .chat-display {
+        height: 200px;
+        padding: 14px;
+    }
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .gallery-card {
+        height: 140px;
+    }
+}
+
+/* Extra Small Phones (<= 480px) */
+@media (max-width: 480px) {
+    .action-buttons {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .action-buttons .btn {
+        width: 100%;
+    }
+
     .gallery-grid {
         grid-template-columns: 1fr;
     }
-    
-    .action-buttons {
-        flex-direction: column;
+
+    .gallery-card {
+        height: 160px;
+    }
+
+    .chat-opt-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .checklist-footer {
+        justify-content: center;
+    }
+
+    .checklist-footer .btn {
+        width: 100%;
+    }
+
+    .modal-content {
+        max-width: 95%;
+        max-height: 75vh;
+    }
+
+    .modal-close {
+        top: 16px;
+        right: 20px;
+        font-size: 32px;
     }
 }
