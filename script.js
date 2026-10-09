@@ -3,6 +3,37 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Mobile Navigation Hamburger Menu Toggle
+  const navToggleBtn = document.getElementById('nav-toggle-btn');
+  const navLinks = document.querySelector('.nav-links');
+
+  if (navToggleBtn && navLinks) {
+    navToggleBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = navLinks.classList.toggle('nav-active');
+      navToggleBtn.classList.toggle('active', isOpen);
+      navToggleBtn.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close mobile nav when clicking any link
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('nav-active');
+        navToggleBtn.classList.remove('active');
+        navToggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navLinks.contains(e.target) && !navToggleBtn.contains(e.target)) {
+        navLinks.classList.remove('nav-active');
+        navToggleBtn.classList.remove('active');
+        navToggleBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   // Global State
   let soundEnabled = true;
   let totalPets = parseInt(localStorage.getItem('chikki_pets') || '0');
@@ -553,6 +584,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
   startGameBtn.addEventListener('click', startTreatGame);
 
+  // Mobile Touch Button Handlers for Treat Catcher
+  const touchBtnLeft = document.getElementById('touch-btn-left');
+  const touchBtnRight = document.getElementById('touch-btn-right');
+
+  if (touchBtnLeft && touchBtnRight) {
+    const startMoveLeft = (e) => {
+      if (e && e.cancelable) e.preventDefault();
+      keys.Left = true;
+    };
+    const stopMoveLeft = (e) => {
+      if (e && e.cancelable) e.preventDefault();
+      keys.Left = false;
+    };
+    const startMoveRight = (e) => {
+      if (e && e.cancelable) e.preventDefault();
+      keys.Right = true;
+    };
+    const stopMoveRight = (e) => {
+      if (e && e.cancelable) e.preventDefault();
+      keys.Right = false;
+    };
+
+    touchBtnLeft.addEventListener('touchstart', startMoveLeft, { passive: false });
+    touchBtnLeft.addEventListener('touchend', stopMoveLeft, { passive: false });
+    touchBtnLeft.addEventListener('mousedown', startMoveLeft);
+    touchBtnLeft.addEventListener('mouseup', stopMoveLeft);
+    touchBtnLeft.addEventListener('mouseleave', stopMoveLeft);
+
+    touchBtnRight.addEventListener('touchstart', startMoveRight, { passive: false });
+    touchBtnRight.addEventListener('touchend', stopMoveRight, { passive: false });
+    touchBtnRight.addEventListener('mousedown', startMoveRight);
+    touchBtnRight.addEventListener('mouseup', stopMoveRight);
+    touchBtnRight.addEventListener('mouseleave', stopMoveRight);
+  }
+
   /* --- GAME 2: Laser Pointer Chase --- */
   const laserArena = document.getElementById('laser-arena');
   const laserDot = document.getElementById('laser-dot');
@@ -563,10 +629,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let pounceCount = 0;
   let comboCount = 0;
 
-  laserArena.addEventListener('click', (e) => {
+  function handleLaserPointerAction(clientX, clientY) {
     const rect = laserArena.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
 
     // Move Laser Dot
     laserDot.style.left = `${x}px`;
@@ -583,9 +649,20 @@ document.addEventListener('DOMContentLoaded', () => {
       laserComboScoreEl.textContent = `${comboCount}x`;
 
       playSynthesizedMeow(1.2 + (comboCount % 5) * 0.1);
-      createFloatingHeart(e.clientX, e.clientY, '🔴');
+      createFloatingHeart(clientX, clientY, '🔴');
     }, 180);
+  }
+
+  laserArena.addEventListener('click', (e) => {
+    handleLaserPointerAction(e.clientX, e.clientY);
   });
+
+  laserArena.addEventListener('touchstart', (e) => {
+    if (e.touches.length > 0) {
+      if (e.cancelable) e.preventDefault();
+      handleLaserPointerAction(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: false });
 
   /* --- GAME 3: Petting & Purr Simulator --- */
   const petInteractiveTarget = document.getElementById('pet-interactive-target');
